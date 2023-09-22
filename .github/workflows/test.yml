@@ -31,6 +31,7 @@ jobs:
           VERSION=${TAG#v}
           MAJOR=$(cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}')
           sed -i -e 's/app.version = .*/app.version = '"${VERSION}"'/' -e 's/app.major = .*/app.major = '"${MAJOR}"'/' build.properties
+          rm -rf latest
       -
         name: Set up Git
         run: |
