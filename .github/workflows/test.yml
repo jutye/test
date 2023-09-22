@@ -20,8 +20,7 @@ jobs:
           ) 
           echo "$list" | 
               #jq -s '.[] | sort_by(.published_at)|reverse' | 
-              jq -c '. | {date: .published_at, id: .id, prerelease: .prerelease, tag_name: .tag_name, name: .name}' | 
-                    > latest
+              jq -c '. | {date: .published_at, id: .id, prerelease: .prerelease, tag_name: .tag_name, name: .name}' > latest
           echo "latest"
                 
                 
