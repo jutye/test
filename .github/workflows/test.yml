@@ -22,7 +22,7 @@ jobs:
           #cat latest | jq -r .tag_name > tag 
           #cat tag
           echo "TAG=$(cat latest | jq -r .tag_name)"
-          echo "VERSION=${TAG#v}"
+          echo "VERSION="${TAG#v}""
           echo "MAJOR=$(cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}')
           #cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}' > name
           #cat name
