@@ -24,7 +24,7 @@ jobs:
           TAG=$(cat latest | jq -r .tag_name)
           echo "VERSION=${TAG#v}"
           echo "$TAG"
-          echo "MAJOR=$(cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}')
+          echo "MAJOR=$(cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}')"
           #cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}' > name
           #cat name
           
