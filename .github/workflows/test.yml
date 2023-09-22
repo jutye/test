@@ -9,7 +9,11 @@ jobs:
     name: Get-latest
     runs-on: ubuntu-latest
     steps:
-      - name: get
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: get
         run: |
           list=$(
             curl -s -L \
@@ -21,9 +25,24 @@ jobs:
           echo "$list" | jq -c '. | {date: .published_at, id: .id, prerelease: .prerelease, tag_name: .tag_name, name: .name}' > latest
           TAG=$(cat latest | jq -r .tag_name)
           echo "$TAG"
-          echo "VERSION=${TAG#v}"
-          echo "MAJOR=$(cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}')"
-          
+          #echo "VERSION=${TAG#v}"
+          #echo "MAJOR=$(cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}')"
+
+          VERSION=${TAG#v}
+          MAJOR=$(cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}')
+          sed -i -e 's/app.version = .*/app.version = '"${VERSION}"'/' -e 's/app.major = .*/app.major = '"${MAJOR}"'/' build.properties
+      -
+        name: Set up Git
+        run: |
+          git config user.name GitHub
+          git config user.email noreply@github.com
+          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git
+      -
+        name: Commit and push changes
+        run: |
+          git add .
+          git commit --author "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" --allow-empty -m "$(git log -1 --pretty=%s)"
+          git push
           
                 
                 
