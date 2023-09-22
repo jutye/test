@@ -1,0 +1,13 @@
+name: test
+on:
+  schedule:
+    - cron: "10 14 1-31/2 * *"
+  workflow_dispatch:
+    
+jobs:
+  updates:
+    name: updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Core
+        uses: actions/checkout@v4
