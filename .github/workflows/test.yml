@@ -21,8 +21,9 @@ jobs:
           echo "$list" | jq -c '. | {date: .published_at, id: .id, prerelease: .prerelease, tag_name: .tag_name, name: .name}' > latest
           #cat latest | jq -r .tag_name > tag 
           #cat tag
-          echo "TAG=$(cat latest | jq -r .tag_name)"
-          echo "VERSION="${TAG#v}""
+          TAG=$(cat latest | jq -r .tag_name)
+          echo "VERSION=${TAG#v}"
+          echo "$TAG"
           echo "MAJOR=$(cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}')
           #cat latest | jq -r .name | awk '{print $4}'  | awk -F '.' '{print $1}' > name
           #cat name
